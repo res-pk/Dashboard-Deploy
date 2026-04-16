@@ -1,0 +1,57 @@
+scientechnic-dashboard-nextjs-routed-fixed
+├── app
+│   ├── dashboard
+│   │   ├── appfollow
+│   │   │   └── page.jsx
+│   │   ├── approvals
+│   │   │   └── page.jsx
+│   │   ├── billing
+│   │   │   └── page.jsx
+│   │   ├── commercial
+│   │   │   └── page.jsx
+│   │   ├── docready
+│   │   │   └── page.jsx
+│   │   ├── docstatus
+│   │   │   └── page.jsx
+│   │   ├── drilldown
+│   │   │   └── page.jsx
+│   │   ├── health
+│   │   │   └── page.jsx
+│   │   ├── inspfollow
+│   │   │   └── page.jsx
+│   │   ├── material
+│   │   │   └── page.jsx
+│   │   ├── milestones
+│   │   │   └── page.jsx
+│   │   ├── packages
+│   │   │   └── page.jsx
+│   │   ├── portfolio
+│   │   │   └── page.jsx
+│   │   ├── risks
+│   │   │   └── page.jsx
+│   │   ├── siteprog
+│   │   │   └── page.jsx
+│   │   ├── taskboard
+│   │   │   └── page.jsx
+│   │   ├── workspace
+│   │   │   └── page.jsx
+│   │   └── layout.jsx
+│   ├── globals.css
+│   ├── layout.jsx
+│   └── page.jsx
+├── components
+│   └── layout
+│       ├── DashboardShell.jsx
+│       ├── Sidebar.jsx
+│       └── Topbar.jsx
+├── modules
+│   └── dashboard
+│       ├── screens
+│       ├── ScreenView.jsx
+│       ├── config.js
+│       └── screenContent.js
+├── .gitignore
+├── README.md
+├── jsconfig.json
+├── next.config.mjs
+└── package.json
