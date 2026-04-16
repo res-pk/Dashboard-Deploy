@@ -13,8 +13,10 @@ const dotColors = {
 
 export default function Sidebar() {
   const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const currentPortfolio = searchParams.get('portfolio');
+  const portfolio =
+  typeof window !== 'undefined'
+    ? new URLSearchParams(window.location.search).get('portfolio') || defaultPortfolioFilter
+    : defaultPortfolioFilter;
   let currentSection = null;
 
   function hrefFor(slug) {

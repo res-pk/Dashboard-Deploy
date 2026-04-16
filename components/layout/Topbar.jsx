@@ -8,8 +8,10 @@ import GlobalSearch from '@/components/search/GlobalSearch';
 export default function Topbar({ slug }) {
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const selectedPortfolio = searchParams.get('portfolio') || defaultPortfolioFilter;
+  const portfolio =
+  typeof window !== 'undefined'
+    ? new URLSearchParams(window.location.search).get('portfolio') || defaultPortfolioFilter
+    : defaultPortfolioFilter;
   const selectedLabel = useMemo(() => getPortfolioFilterLabel(selectedPortfolio), [selectedPortfolio]);
 
   function updatePortfolio(nextValue) {
