@@ -8,8 +8,10 @@ import { searchDashboardIndex } from '@/lib/search/searchIndex';
 
 export default function GlobalSearch() {
   const inputRef = useRef(null);
-  const searchParams = useSearchParams();
-  const portfolio = searchParams.get('portfolio') || defaultPortfolioFilter;
+  const portfolio =
+  typeof window !== 'undefined'
+    ? new URLSearchParams(window.location.search).get('portfolio') || defaultPortfolioFilter
+    : defaultPortfolioFilter;
   const [query, setQuery] = useState('');
   const [open, setOpen] = useState(false);
 
