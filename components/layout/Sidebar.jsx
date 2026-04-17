@@ -1,9 +1,8 @@
 'use client';
 
 import Link from 'next/link';
+import { menu, defaultPortfolioFilter } from '@/modules/dashboard/config';
 import { usePathname, useSearchParams } from 'next/navigation';
-import { menu } from '@/modules/dashboard/config';
-import { defaultPortfolioFilter } from '@/modules/dashboard/config';
 
 const dotColors = {
   portfolio:'var(--bl)', health:'var(--gn)', billing:'var(--am)', approvals:'var(--rd)',
@@ -14,28 +13,40 @@ const dotColors = {
 
 export default function Sidebar() {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
+
   const portfolio =
-  typeof window !== 'undefined'
-    ? new URLSearchParams(window.location.search).get('portfolio') || defaultPortfolioFilter
-    : defaultPortfolioFilter;
-  let currentSection = null;
+    searchParams.get('portfolio') || defaultPortfolioFilter;
 
   function hrefFor(slug) {
-    const params = new URLSearchParams();
-    if (portfolio) params.set('portfolio', portfolio);
+    const params = new URLSearchParams(searchParams.toString());
+
+    if (portfolio && portfolio !== defaultPortfolioFilter) {
+      params.set('portfolio', portfolio);
+    }
+
     const query = params.toString();
     return query ? `/dashboard/${slug}?${query}` : `/dashboard/${slug}`;
   }
 
+  let currentSection = null;
+
   return (
     <nav className="side">
       <div className="logo">Scientechnic <span>ERP</span></div>
+
       {menu.map((item) => {
-        const sectionHeader = item.section !== currentSection ? (
-          <div className="ns" key={`section-${item.section}`}>{item.section}</div>
-        ) : null;
+        const sectionHeader =
+          item.section !== currentSection ? (
+            <div className="ns" key={`section-${item.section}`}>
+              {item.section}
+            </div>
+          ) : null;
+
         currentSection = item.section;
+
         const active = pathname === `/dashboard/${item.slug}`;
+
         return (
           <div key={item.slug}>
             {sectionHeader}
@@ -46,7 +57,6 @@ export default function Sidebar() {
           </div>
         );
       })}
-      <div style={{ height: 10 }} />
     </nav>
   );
 }

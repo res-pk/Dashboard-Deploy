@@ -1,0 +1,10 @@
+import { defaultPortfolioFilter } from '@/modules/dashboard/config';
+
+export function getPortfolioFromURL() {
+  if (typeof window === 'undefined') return defaultPortfolioFilter;
+
+  return (
+    new URLSearchParams(window.location.search).get('portfolio') ||
+    defaultPortfolioFilter
+  );
+}

@@ -2,16 +2,16 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
+import { getPortfolioFromURL } from '@/lib/getPortfolioFromURL';
 import { defaultPortfolioFilter, getPortfolioFilterLabel } from '@/modules/dashboard/config';
 import { searchDashboardIndex } from '@/lib/search/searchIndex';
 
+
 export default function GlobalSearch() {
+  const portfolio = getPortfolioFromURL();
   const inputRef = useRef(null);
-  const searchParams = useSearchParams();
-  const portfolio = searchParams.get('portfolio') || defaultPortfolioFilter;
   const [query, setQuery] = useState('');
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false);  
 
   useEffect(() => {
     function handleKeyDown(event) {

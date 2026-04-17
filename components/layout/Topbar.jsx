@@ -2,23 +2,37 @@
 
 import { useMemo } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { defaultPortfolioFilter, getPortfolioFilterLabel, pmRoutes, portfolioFilters, titles } from '@/modules/dashboard/config';
-import GlobalSearch from '@/components/search/GlobalSearch';
+import {
+  defaultPortfolioFilter,
+  getPortfolioFilterLabel,
+  pmRoutes,
+  portfolioFilters,
+  titles
+} from '@/modules/dashboard/config';
+import GlobalSearchWrapper from '@/components/search/GlobalSearchWrapper';
 
 export default function Topbar({ slug }) {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
+
   const portfolio =
-  typeof window !== 'undefined'
-    ? new URLSearchParams(window.location.search).get('portfolio') || defaultPortfolioFilter
-    : defaultPortfolioFilter;
-  const selectedLabel = useMemo(() => getPortfolioFilterLabel(portfolio), [portfolio]);
+    searchParams.get('portfolio') || defaultPortfolioFilter;
+
+  const selectedLabel = useMemo(
+    () => getPortfolioFilterLabel(portfolio),
+    [portfolio]
+  );
 
   function updatePortfolio(nextValue) {
     const params = new URLSearchParams(searchParams.toString());
-    if (!nextValue || nextValue === defaultPortfolioFilter) params.delete('portfolio');
-    else params.set('portfolio', nextValue);
+
+    if (!nextValue || nextValue === defaultPortfolioFilter) {
+      params.delete('portfolio');
+    } else {
+      params.set('portfolio', nextValue);
+    }
+
     const query = params.toString();
     router.push(query ? `${pathname}?${query}` : pathname);
   }
@@ -26,21 +40,25 @@ export default function Topbar({ slug }) {
   return (
     <div className="bar topbar-wrap">
       <span className="btl">{titles[slug] || slug}</span>
-      {pmRoutes.has(slug) ? <span className="bbd">PM &amp; Engineer</span> : null}
-      <GlobalSearch />
+
+      {pmRoutes.has(slug) && <span className="bbd">PM & Engineer</span>}
+
+      <GlobalSearchWrapper />
+
       <select
-       className="ps portfolioSelect"
-       value={portfolio}
-       onChange={(e) => updatePortfolio(e.target.value)}
-       aria-label="Portfolio filter" > 
-       {portfolioFilters.map((item) =>(
-          <option key={item.key} value={item.key}>{item.label}</option>
+        className="ps portfolioSelect"
+        value={portfolio}
+        onChange={(e) => updatePortfolio(e.target.value)}
+      >
+        {portfolioFilters.map((item) => (
+          <option key={item.key} value={item.key}>
+            {item.label}
+          </option>
         ))}
       </select>
-      <span className="ac portfolio-chip" title="Configurable portfolio scope">
-        <span className="av" style={{ width: 18, height: 18, fontSize: 9 }}>F</span>
-        {selectedLabel}
-      </span>
+
+      <span className="ac portfolio-chip">{selectedLabel}</span>
+
       <button className="xb">Export</button>
     </div>
   );
