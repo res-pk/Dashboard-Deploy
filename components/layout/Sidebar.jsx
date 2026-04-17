@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { menu } from '@/modules/dashboard/config';
+import { defaultPortfolioFilter } from '@/modules/dashboard/config';
 
 const dotColors = {
   portfolio:'var(--bl)', health:'var(--gn)', billing:'var(--am)', approvals:'var(--rd)',
@@ -21,7 +22,7 @@ export default function Sidebar() {
 
   function hrefFor(slug) {
     const params = new URLSearchParams();
-    if (currentPortfolio) params.set('portfolio', currentPortfolio);
+    if (Portfolio) params.set('portfolio', Portfolio);
     const query = params.toString();
     return query ? `/dashboard/${slug}?${query}` : `/dashboard/${slug}`;
   }
