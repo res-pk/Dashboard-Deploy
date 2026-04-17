@@ -22,7 +22,7 @@ export default function Sidebar() {
 
   function hrefFor(slug) {
     const params = new URLSearchParams();
-    if (Portfolio) params.set('portfolio', Portfolio);
+    if (portfolio) params.set('portfolio', portfolio);
     const query = params.toString();
     return query ? `/dashboard/${slug}?${query}` : `/dashboard/${slug}`;
   }

@@ -6,13 +6,14 @@ import { defaultPortfolioFilter, getPortfolioFilterLabel, pmRoutes, portfolioFil
 import GlobalSearch from '@/components/search/GlobalSearch';
 
 export default function Topbar({ slug }) {
+  const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
   const portfolio =
   typeof window !== 'undefined'
     ? new URLSearchParams(window.location.search).get('portfolio') || defaultPortfolioFilter
     : defaultPortfolioFilter;
-  const selectedLabel = useMemo(() => getPortfolioFilterLabel(selectedPortfolio), [selectedPortfolio]);
+  const selectedLabel = useMemo(() => getPortfolioFilterLabel(portfolio), [portfolio]);
 
   function updatePortfolio(nextValue) {
     const params = new URLSearchParams(searchParams.toString());
@@ -27,8 +28,12 @@ export default function Topbar({ slug }) {
       <span className="btl">{titles[slug] || slug}</span>
       {pmRoutes.has(slug) ? <span className="bbd">PM &amp; Engineer</span> : null}
       <GlobalSearch />
-      <select className="ps portfolioSelect" value={selectedPortfolio} onChange={(e) => updatePortfolio(e.target.value)} aria-label="Portfolio filter">
-        {portfolioFilters.map((item) => (
+      <select
+       className="ps portfolioSelect"
+       value={portfolio}
+       onChange={(e) => updatePortfolio(e.target.value)}
+       aria-label="Portfolio filter" > 
+       {portfolioFilters.map((item) =>(
           <option key={item.key} value={item.key}>{item.label}</option>
         ))}
       </select>
